@@ -1,0 +1,20 @@
+# Virtual muhitlar
+blog_venv/
+.venv/
+env/
+venv/
+
+# Python kesh fayllari
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ma'lumotlar bazasi
+db.sqlite3
+db.sqlite3-journal
+
+# VS Code sozlamalari
+.vscode/
+
+# Mac tizim fayllari
+.DS_Store

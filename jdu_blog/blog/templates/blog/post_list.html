@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Postlar ro'yxati</title>
+</head>
+<body>
+    <h1>Barcha Postlar</h1>
+
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+                <small>{{ post.created_at }}</small>
+            </li>
+            <hr>
+        {% empty %}
+            <li>Hozircha hech qanday post yo'q.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

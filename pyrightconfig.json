@@ -1,0 +1,7 @@
+{
+  "venvPath": ".",
+  "venv": "blog_venv",
+  "extraPaths": [
+    "jdu_blog"
+  ]
+}
