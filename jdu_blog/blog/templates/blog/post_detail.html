@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <a href="{% url 'post_list' %}">&larr; Barcha postlarga qaytish</a>
+
+    <h1>{{ post.title }}</h1>
+    <p><small>Chop etilgan sana: {{ post.created_at }}</small></p>
+    <hr>
+    <div>
+        {{ post.content|linebreaks }}
+    </div>
+</body>
+</html>
