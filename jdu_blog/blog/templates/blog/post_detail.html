@@ -5,13 +5,33 @@
     <title>{{ post.title }}</title>
 </head>
 <body>
-    <a href="{% url 'post_list' %}">&larr; Barcha postlarga qaytish</a>
+    <p><a href="{% url 'post_list' %}">&larr; Barcha postlarga qaytish</a></p>
 
+    <!-- Sarlavha -->
     <h1>{{ post.title }}</h1>
-    <p><small>Chop etilgan sana: {{ post.created_at }}</small></p>
+    {% if post.category %}
+        <p><strong>Kategoriya:</strong> {{ post.category.name }}</p>
+    {% endif %}
+
     <hr>
-    <div>
+
+    <!-- Postning asosiy matni -->
+    <div style="font-size: 16px; line-height: 1.6;">
         {{ post.content|linebreaks }}
+    </div>
+
+    <hr>
+
+    <!-- Pastki qism: Sanalar va Tahrirlash tugmasi -->
+    <div style="color: #666; margin-top: 15px;">
+        <p><small>📅 Yaratilgan sana: {{ post.created_at|date:"Y-m-d H:i" }}</small></p>
+        <p><small>🔄 Oxirgi o'zgartirilgan: {{ post.updated_at|date:"Y-m-d H:i" }}</small></p>
+        
+        <p>
+            <a href="{% url 'post_update' post.id %}" style="text-decoration: none; font-weight: bold;">
+                ✏️ Postni tahrirlash
+            </a>
+        </p>
     </div>
 </body>
 </html>

@@ -6,16 +6,27 @@
 </head>
 <body>
     <h1>Barcha Postlar</h1>
+    <p><a href="{% url 'post_create' %}">+ Yangi post yaratish</a></p>
 
     <ul>
         {% for post in posts %}
             <li>
-                <!-- 5-topshiriq: Dinamik detail sahifasiga havola -->
                 <h3>
                     <a href="{% url 'post_detail' post.id %}">
                         {{ post.title }}
                     </a>
                 </h3>
+
+                <!-- 5-topshiriq: Bog'liq modelning nomini ko'rsatish -->
+                <p>
+                    <strong>Kategoriya:</strong> 
+                    {% if post.category %}
+                        <span>{{ post.category.name }}</span>
+                    {% else %}
+                        <span>Kategoriyasiz</span>
+                    {% endif %}
+                </p>
+
                 <p>{{ post.content|truncatewords:20 }}</p>
                 <small>{{ post.created_at }}</small>
             </li>
@@ -24,7 +35,5 @@
             <li>Hozircha postlar mavjud emas.</li>
         {% endfor %}
     </ul>
-    <h1>Barcha Postlar</h1>
-    <p><a href="{% url 'post_create' %}">+ Yangi post yaratish</a></p>
 </body>
 </html>
