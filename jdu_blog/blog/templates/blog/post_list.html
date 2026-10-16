@@ -5,6 +5,23 @@
     <title>Postlar ro'yxati</title>
 </head>
 <body>
+    <!-- Foydalanuvchi holati -->
+    <div style="background: #f4f4f4; padding: 10px; margin-bottom: 20px;">
+        {% if user.is_authenticated %}
+            <span>Xush kelibsiz, <strong>{{ user.username }}</strong>!</span> | 
+            <!-- Logout xavfsiz POST so'rovi orqali yuboriladi -->
+            <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline;">
+                    Chiqish (Logout)
+                </button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Kirish</a> | 
+            <a href="{% url 'register' %}">Ro'yxatdan o'tish</a>
+        {% endif %}
+    </div>
+
     <h1>Barcha Postlar</h1>
     <p><a href="{% url 'post_create' %}">+ Yangi post yaratish</a></p>
 
@@ -16,8 +33,6 @@
                         {{ post.title }}
                     </a>
                 </h3>
-
-                <!-- 5-topshiriq: Bog'liq modelning nomini ko'rsatish -->
                 <p>
                     <strong>Kategoriya:</strong> 
                     {% if post.category %}
@@ -26,7 +41,6 @@
                         <span>Kategoriyasiz</span>
                     {% endif %}
                 </p>
-
                 <p>{{ post.content|truncatewords:20 }}</p>
                 <small>{{ post.created_at }}</small>
             </li>

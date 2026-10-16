@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Tizimga kirish</title>
+</head>
+<body>
+    <h2>Tizimga kirish</h2>
+
+    {% if form.errors %}
+        <p style="color: red;">Login yoki parol noto'g'ri kiritildi!</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Kirish</button>
+    </form>
+    <p>Akkauntingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'tish</a></p>
+</body>
+</html>

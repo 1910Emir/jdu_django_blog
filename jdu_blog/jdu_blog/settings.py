@@ -126,3 +126,7 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+LOGIN_REDIRECT_URL = 'post_list'   # Login qilgach postlar ro'yxatiga o'tadi
+LOGOUT_REDIRECT_URL = 'login'       # Chiqib ketgach login sahifasiga qaytadi
+LOGIN_URL = 'login'                 # @login_required ochadigan login manzili

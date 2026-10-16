@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Ro'yxatdan o'tish</title>
+</head>
+<body>
+    <h2>Ro'yxatdan o'tish</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Akkaunt yaratish</button>
+    </form>
+    <p>Allaqachon akkauntingiz bormi? <a href="{% url 'login' %}">Kirish (Login)</a></p>
+</body>
+</html>
