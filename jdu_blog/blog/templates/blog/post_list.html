@@ -1,53 +1,79 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Postlar ro'yxati</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDU Django Blog</title>
+    <!-- 5-topshiriq: CSS faylni ulash -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <!-- Foydalanuvchi holati -->
-    <div style="background: #f4f4f4; padding: 10px; margin-bottom: 20px;">
-        {% if user.is_authenticated %}
-            <span>Xush kelibsiz, <strong>{{ user.username }}</strong>!</span> | 
-            <!-- Logout xavfsiz POST so'rovi orqali yuboriladi -->
-            <form action="{% url 'logout' %}" method="POST" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline;">
-                    Chiqish (Logout)
-                </button>
-            </form>
-        {% else %}
-            <a href="{% url 'login' %}">Kirish</a> | 
-            <a href="{% url 'register' %}">Ro'yxatdan o'tish</a>
-        {% endif %}
-    </div>
+    <div class="container">
+        <!-- 4-topshiriq: JDU logotipi -->
+        <header class="header-banner">
+            <div>
+                <h2>JDU Django Blog</h2>
+            </div>
+            <img src="{% static 'images/jdu_logo.png' %}" alt="JDU Logo" class="jdu-logo">
+        </header>
 
-    <h1>Barcha Postlar</h1>
-    <p><a href="{% url 'post_create' %}">+ Yangi post yaratish</a></p>
-
-    <ul>
-        {% for post in posts %}
-            <li>
-                <h3>
-                    <a href="{% url 'post_detail' post.id %}">
-                        {{ post.title }}
-                    </a>
-                </h3>
-                <p>
-                    <strong>Kategoriya:</strong> 
-                    {% if post.category %}
-                        <span>{{ post.category.name }}</span>
+        <!-- Foydalanuvchi va Shaxsiy surat bloki -->
+        <div class="profile-card">
+            <img src="{% static 'images/profile.jpg' %}" alt="Ozodbek" class="profile-img">
+            <div>
+                <h3 style="margin: 0;">Ozodbek Amirullayev</h3>
+                <p style="margin: 5px 0 0; color: #64748b;">
+                    {% if user.is_authenticated %}
+                        Tizimga kirgan: <strong>{{ user.username }}</strong> | 
+                        <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background: none; border: none; color: #ef4444; cursor: pointer; text-decoration: underline;">
+                                Chiqish
+                            </button>
+                        </form>
                     {% else %}
-                        <span>Kategoriyasiz</span>
+                        <a href="{% url 'login' %}">Kirish</a> | <a href="{% url 'register' %}">Ro'yxatdan o'tish</a>
                     {% endif %}
                 </p>
-                <p>{{ post.content|truncatewords:20 }}</p>
-                <small>{{ post.created_at }}</small>
-            </li>
-            <hr>
-        {% empty %}
-            <li>Hozircha postlar mavjud emas.</li>
-        {% endfor %}
-    </ul>
+            </div>
+        </div>
+
+        <!-- 4-topshiriq: Qisqa video bo'limi -->
+        <div class="video-section">
+            <h4>Dars taqdimot videosi:</h4>
+            <video controls>
+                <source src="{% static 'videos/intro.mp4' %}" type="video/mp4">
+                Brauzeringiz video tegini qo'llab-quvvatlamaydi.
+            </video>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
+
+        <!-- Postlar ro'yxati -->
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Barcha Postlar</h3>
+            <a href="{% url 'post_create' %}" style="text-decoration: none; background: #2563eb; color: white; padding: 8px 14px; border-radius: 6px;">+ Yangi post</a>
+        </div>
+
+        <div style="margin-top: 20px;">
+            {% for post in posts %}
+                <div class="post-card">
+                    <h3 style="margin-top: 0;">
+                        <a href="{% url 'post_detail' post.id %}" style="color: #1e40af; text-decoration: none;">
+                            {{ post.title }}
+                        </a>
+                    </h3>
+                    <p style="color: #475569;">
+                        <strong>Kategoriya:</strong> {{ post.category.name|default:"Kategoriyasiz" }}
+                    </p>
+                    <p>{{ post.content|truncatewords:25 }}</p>
+                    <small style="color: #94a3b8;">📅 {{ post.created_at|date:"Y-m-d H:i" }}</small>
+                </div>
+            {% empty %}
+                <p>Hozircha postlar mavjud emas.</p>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
