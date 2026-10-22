@@ -1,15 +1,25 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from rest_framework.routers import DefaultRouter
+
 from .views import (
     post_list_fbv, 
     PostListView, 
     post_detail, 
     post_create, 
     post_update,
-    register
+    register,
+    PostViewSet,  # <-- 4-topshiriqda yaratilgan ViewSet
 )
 
+# 5-topshiriq: DRF Router yaratish va ro'yxatdan o'tkazish
+router = DefaultRouter()
+router.register('posts', PostViewSet, basename='post-api')
+
 urlpatterns = [
+    # DRF API endpointlari (http://127.0.0.1:8000/api/posts/)
+    path('api/', include(router.urls)),
+
     # Ro'yxat sahifalari (Himoyalangan)
     path('', PostListView.as_view(), name='home'),
     path('posts/', PostListView.as_view(), name='post_list'),

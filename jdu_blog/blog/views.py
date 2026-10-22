@@ -5,6 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
+from rest_framework import viewsets
+from .models import Post
+from .serializers import PostSerializer
+
 from .models import Post
 from .forms import PostForm
 
@@ -67,3 +71,7 @@ def post_update(request, id):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_form.html', {'form': form, 'post': post})
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
