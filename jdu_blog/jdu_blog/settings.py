@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -139,3 +139,7 @@ MAILERS = {
 LOGIN_REDIRECT_URL = 'post_list'   # Login qilgach postlar ro'yxatiga o'tadi
 LOGOUT_REDIRECT_URL = 'login'       # Chiqib ketgach login sahifasiga qaytadi
 LOGIN_URL = 'login'                 # @login_required ochadigan login manzili
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

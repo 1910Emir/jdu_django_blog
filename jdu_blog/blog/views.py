@@ -42,11 +42,11 @@ def post_detail(request, id):
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
-# Yangi post yaratish (bunga ham login talab qilinishi ma'qul)
+# Yangi post yaratish (request.FILES qo'shildi)
 @login_required
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)  # Fayllar yuklanishi uchun request.FILES kiritildi
         if form.is_valid():
             form.save()
             return redirect('post_list')
@@ -55,12 +55,12 @@ def post_create(request):
     return render(request, 'blog/post_form.html', {'form': form})
 
 
-# Postni tahrirlash
+# Postni tahrirlash (request.FILES qo'shildi)
 @login_required
 def post_update(request, id):
     post = get_object_or_404(Post, id=id)
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)  # Rasmni yangilash uchun request.FILES kiritildi
         if form.is_valid():
             form.save()
             return redirect('post_detail', id=post.pk)

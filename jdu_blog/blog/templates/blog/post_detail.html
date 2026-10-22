@@ -13,6 +13,13 @@
         <p><strong>Kategoriya:</strong> {{ post.category.name }}</p>
     {% endif %}
 
+    <!-- 5-topshiriq: Yuklangan rasmni ko'rsatish -->
+    {% if post.image %}
+        <div style="margin: 15px 0;">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 500px; width: 100%; height: auto; border-radius: 8px;">
+        </div>
+    {% endif %}
+
     <hr>
 
     <!-- Postning asosiy matni -->

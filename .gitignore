@@ -1,20 +1,36 @@
-# Virtual muhitlar
+# Virtual muhit (Virtual Environment)
 blog_venv/
 .venv/
-env/
 venv/
+env/
 
 # Python kesh fayllari
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Ma'lumotlar bazasi
+# Ma'lumotlar bazasi (Lokal SQLite fayli)
+*.sqlite3
 db.sqlite3
-db.sqlite3-journal
 
-# VS Code sozlamalari
-.vscode/
+# Foydalanuvchilar yuklagan media fayllar va rasmlar (11-hafta)
+media/
+media/*
 
-# Mac tizim fayllari
+# Statik fayllar to'plami
+staticfiles/
+
+# macOS tizimiga xos yashirin fayllar
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Muhit o'zgaruvchilari (maxfiy kalitlar)
+.env
+.env.*
+
+# Muharrir sozlamalari (VS Code va boshqalar)
+.vscode/
+.idea/
