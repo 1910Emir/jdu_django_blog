@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JDU Django Blog</title>
-    <!-- 5-topshiriq: CSS faylni ulash -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="container">
-        <!-- 4-topshiriq: JDU logotipi -->
+        <!-- JDU logotipi -->
         <header class="header-banner">
             <div>
                 <h2>JDU Django Blog</h2>
@@ -18,7 +17,7 @@
             <img src="{% static 'images/jdu_logo.png' %}" alt="JDU Logo" class="jdu-logo">
         </header>
 
-        <!-- Foydalanuvchi va Shaxsiy surat bloki -->
+        <!-- Profil kartochkasi -->
         <div class="profile-card">
             <img src="{% static 'images/profile.jpg' %}" alt="Ozodbek" class="profile-img">
             <div>
@@ -39,7 +38,7 @@
             </div>
         </div>
 
-        <!-- 4-topshiriq: Qisqa video bo'limi -->
+        <!-- Video bo'limi -->
         <div class="video-section">
             <h4>Dars taqdimot videosi:</h4>
             <video controls>
@@ -50,7 +49,7 @@
 
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
 
-        <!-- Postlar ro'yxati -->
+        <!-- Postlar sarlavhasi va yangi post tugmasi -->
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h3>Barcha Postlar</h3>
             <a href="{% url 'post_create' %}" style="text-decoration: none; background: #2563eb; color: white; padding: 8px 14px; border-radius: 6px;">+ Yangi post</a>
@@ -64,11 +63,47 @@
                             {{ post.title }}
                         </a>
                     </h3>
-                    <p style="color: #475569;">
-                        <strong>Kategoriya:</strong> {{ post.category.name|default:"Kategoriyasiz" }}
+
+                    <!-- MUALLIF VA KATEGORIYA BLOKI -->
+                    <p style="color: #475569; margin: 6px 0; font-size: 0.9rem;">
+                        <strong>Muallif:</strong> 
+                        <span style="color: #2563eb; font-weight: 600;">
+                            {% if post.author %}
+                                {{ post.author.username }}
+                            {% else %}
+                                blog_uz
+                            {% endif %}
+                        </span> 
+                        • <strong>Kategoriya:</strong> {{ post.category.name|default:"Kategoriyasiz" }}
                     </p>
-                    <p>{{ post.content|truncatewords:25 }}</p>
-                    <small style="color: #94a3b8;">📅 {{ post.created_at|date:"Y-m-d H:i" }}</small>
+
+                    <p style="margin: 8px 0;">{{ post.content|truncatewords:25 }}</p>
+
+                    <!-- Statistika va Bosiladigan Like -->
+                    <div style="display: flex; gap: 15px; align-items: center; font-size: 0.85rem; color: #64748b; border-top: 1px solid #f1f5f9; padding-top: 8px; margin-top: 10px;">
+                        <span>📅 {{ post.created_at|date:"Y-m-d H:i" }}</span>
+                        <span>👁 <strong>{{ post.views_count }}</strong></span>
+
+                        {% if user.is_authenticated %}
+                            <form action="{% url 'like_post' post.id %}" method="POST" style="display: inline; margin: 0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" style="background: none; border: 1px solid #cbd5e1; border-radius: 4px; padding: 2px 8px; cursor: pointer; color: inherit; font-size: inherit; display: inline-flex; align-items: center; gap: 4px;">
+                                    {% if user in post.likes.all %}
+                                        ❤️ <strong>{{ post.total_likes }}</strong>
+                                    {% else %}
+                                        🤍 <strong>{{ post.total_likes }}</strong>
+                                    {% endif %}
+                                </button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}?next={{ request.path }}" style="text-decoration: none; color: inherit;">
+                                🤍 <strong>{{ post.total_likes }}</strong>
+                            </a>
+                        {% endif %}
+
+                        <span>💬 <strong>{{ post.comments.count }}</strong></span>
+                    </div>
                 </div>
             {% empty %}
                 <p>Hozircha postlar mavjud emas.</p>
